@@ -44,16 +44,13 @@ public class Gluecode {
 		driver.get("https://www.saucedemo.com/");
 	}
 
-	@When("A user enters correct {string} and {string}")
-	public void a_user_enters_correct(String username, String password) {
-		username = "performance_glitch_user";
-		password = "secret_sauce";
+	@When("A user enters correct username and password {string} {string}")
+	public void a_user_enters_username_and_password(String username, String password) {
 		loginPage.login(username, password);
 	}
 
 	@Then("A user is redirected to the {string}")
-	public void a_user_is_redirected_to_the(String inventoryPage) {
-		inventoryPage = "https://www.saucedemo.com/inventory.html";
+	public void a_user_is_redirected_to_the_inventoryPage(String inventoryPage) {
 		assertEquals(inventoryPage, driver.getCurrentUrl(), "unsuccessfully redirected");
 	}
 }
