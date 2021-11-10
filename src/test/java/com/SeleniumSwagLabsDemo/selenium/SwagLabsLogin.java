@@ -2,12 +2,17 @@ package com.SeleniumSwagLabsDemo.selenium;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+
+//import org.openqa.selenium.support.ui.WebDriverWait;
+//import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -47,17 +52,29 @@ public class SwagLabsLogin {
 		WebElement burgerMenuButton = driver.findElement(By.id("react-burger-menu-btn"));
 
 		burgerMenuButton.click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl(), "unsuccessfully redirected");
 	}
 
-  //  @AfterAll
-  //  public static void tearDown() {
-  //  	try {
-  //  		Thread.sleep(3000);
-  //  	} catch (InterruptedException e) {
-  //  		e.printStackTrace();
-  //  	}
-  //  	driver.quit();
-  //  }
+	@Test
+	@Order(3)
+	public void menuButtonAboutLink() {
+		//WebElement menuButtonAboutLinkButton = driver.findElement(By.linkText("About"));
+		WebElement menuButtonAboutLinkButton = driver.findElement(By.id("about_sidebar_link"));
+
+		menuButtonAboutLinkButton.click();
+
+		assertEquals("https://saucelabs.com/", driver.getCurrentUrl(), "unsuccessfully redirected");
+	}
+
+	@AfterAll
+	public static void tearDown() {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		driver.quit();
+	}
 }
