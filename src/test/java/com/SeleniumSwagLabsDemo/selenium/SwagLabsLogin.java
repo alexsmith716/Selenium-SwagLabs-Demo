@@ -60,8 +60,8 @@ public class SwagLabsLogin {
 	@Test
 	@Order(3)
 	public void menuButtonAboutLink() {
-		//WebElement menuButtonAboutLinkButton = driver.findElement(By.linkText("About"));
-		WebElement menuButtonAboutLinkButton = driver.findElement(By.id("about_sidebar_link"));
+		//WebElement menuButtonAboutLinkButton = driver.findElement(By.id("about_sidebar_link"));
+		WebElement menuButtonAboutLinkButton = driver.findElement(By.xpath("//a[contains(text(),'About')]"));
 
 		menuButtonAboutLinkButton.click();
 
