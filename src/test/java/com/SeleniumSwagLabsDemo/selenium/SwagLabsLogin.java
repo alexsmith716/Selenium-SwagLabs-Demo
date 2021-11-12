@@ -1,6 +1,9 @@
 package com.SeleniumSwagLabsDemo.selenium;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +17,7 @@ import org.junit.jupiter.api.Order;
 //import org.openqa.selenium.support.ui.WebDriverWait;
 //import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,11 +47,39 @@ public class SwagLabsLogin {
 
 		loginButton.click();
 
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
 		assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl(), "unsuccessfully redirected");
 	}
 
 	@Test
 	@Order(2)
+	public void selectProductSortContainer() {
+		WebElement selectElement = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
+
+		Select selectObject = new Select(selectElement);
+
+		// Select an <option> based upon the <select> element's internal index
+		// selectObject.selectByIndex(3);
+
+		// Select an <option> based upon its value attribute
+		selectObject.selectByValue("lohi");
+
+		List<WebElement> options = selectObject.getOptions();
+
+		boolean optionExists = false;
+		for (WebElement e : options) {
+			if (e.getText().equals("Price (low to high)")) {
+				optionExists = true;
+				break;
+			}
+		}
+
+		assertTrue(optionExists, "Value not matching with the select dropdown list");
+	}
+
+	@Test
+	@Order(3)
 	public void menuButton() {
 		WebElement burgerMenuButton = driver.findElement(By.id("react-burger-menu-btn"));
 
@@ -58,7 +90,7 @@ public class SwagLabsLogin {
 	}
 
 	@Test
-	@Order(3)
+	@Order(4)
 	public void menuButtonAboutLink() {
 		//WebElement menuButtonAboutLinkButton = driver.findElement(By.id("about_sidebar_link"));
 		WebElement menuButtonAboutLinkButton = driver.findElement(By.xpath("//a[contains(text(),'About')]"));
