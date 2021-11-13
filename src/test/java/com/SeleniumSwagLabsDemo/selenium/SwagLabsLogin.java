@@ -30,7 +30,6 @@ public class SwagLabsLogin {
 
 	@BeforeAll
 	public static void setUp() {
-		// The "java.lang.System.setProperty()" method sets the system property indicated by the specified key
 		driver = new ChromeDriver();
 		driver.get("https://www.saucedemo.com");
 	}
@@ -59,16 +58,16 @@ public class SwagLabsLogin {
 
 		Select selectObject = new Select(selectElement);
 
-		// Select an <option> based upon the <select> element's internal index
-		// selectObject.selectByIndex(3);
-
-		// Select an <option> based upon its value attribute
 		selectObject.selectByValue("lohi");
 
-		List<WebElement> options = selectObject.getOptions();
+		WebElement selectElementA = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
+		Select selectObjectA = new Select(selectElementA);
+
+		List<WebElement> options = selectObjectA.getOptions();
 
 		boolean optionExists = false;
-		for (WebElement e : options) {
+
+		for (WebElement e: options) {
 			if (e.getText().equals("Price (low to high)")) {
 				optionExists = true;
 				break;
