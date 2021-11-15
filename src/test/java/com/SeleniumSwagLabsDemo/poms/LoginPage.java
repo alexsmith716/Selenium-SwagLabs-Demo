@@ -25,7 +25,6 @@ public class LoginPage {
 
 		waitHelper = new WaitHelper(driver);
 		waitHelper.ExplicitWaitForElement(5, "elementToBeClickable", usernameBox);
-
 		waitHelper.FluentWaitForElement(5, 250, "visibilityOf", passwordBox);
 	}
 

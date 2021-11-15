@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.By;
 
 public class WaitHelper {
 
@@ -17,6 +18,7 @@ public class WaitHelper {
 	}
 
 	// wait for a certain condition to occur before proceeding further
+	// Wait to avoid catching errors while the browser is loading
 	public void ExplicitWaitForElement(long timeOutInSeconds, String expectedCondition, WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
 		if (expectedCondition == "visibilityOf") {
@@ -38,10 +40,9 @@ public class WaitHelper {
 	// define the maximum amount of time to wait for a condition to take place
 	// define frequency with which to check the existence of the object condition
 	public void FluentWaitForElement(long timeOutInSeconds, long polling, String expectedCondition, WebElement element) {
-		System.out.println("Sorry!!. The " + element + " didn't appear in the allotted " + timeOutInSeconds + " seconds.");
 		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(timeOutInSeconds))
 			.pollingEvery(Duration.ofMillis(polling))
-			.withMessage("Sorry. The #{element} didn't appear in the allotted #{timeOutInSeconds} seconds.");
+			.withMessage("The " + element + " didn't appear in the allotted " + timeOutInSeconds + " seconds.");
 
 		if (expectedCondition == "visibilityOf") {
 			wait.until(ExpectedConditions.visibilityOf(element));
