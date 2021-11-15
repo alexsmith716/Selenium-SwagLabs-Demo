@@ -27,24 +27,33 @@ public class InventoryPage {
 		PageFactory.initElements(driver, this);
 	}
 
-	public boolean selectProductSortContainer(String value, String equals) {
+	public boolean selectProductSortContainer(String value) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		selectElement.click();
+
+		waitHelper.ImplicitWaitForElement(2);
 		Select selectObject = new Select(selectElement);
-		selectObject.selectByValue(value);
 
-		// waitHelper.ExplicitWaitForElement(5, "elementToBeClickable", selectElement);
-		// waitHelper.ImplicitWaitForElement(5);
-
-		//	List<WebElement> allSelectedOptions = selectObject.getAllSelectedOptions();
-		List<WebElement> options = selectObject.getOptions();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		boolean optionExists = false;
 
-		for (WebElement e: options) {
-			if (e.getText().equals(equals)) {
-				optionExists = true;
-				break;
-			}
+		try {
+			selectObject.selectByValue(value);
+			optionExists = true;
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			e.printStackTrace();
 		}
+
 		return optionExists;
 	}
 }

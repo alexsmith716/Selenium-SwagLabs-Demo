@@ -36,6 +36,10 @@ class SwagLabsLogin {
 		waitHelper = new WaitHelper(driver);
 		driver.get("https://www.saucedemo.com");
 		waitHelper.ImplicitWaitForElement(5);
+
+		if (!driver.getCurrentUrl().contains("saucedemo.com")){
+			throw new IllegalStateException("Current URL is NOT https://www.saucedemo.com: " + driver.getCurrentUrl());
+		}
 	}
 
 	@Test
@@ -44,63 +48,69 @@ class SwagLabsLogin {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login("performance_glitch_user", "secret_sauce");
 
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-
-		assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl(), "unsuccessfully redirected");
-	}
-
-	//  @Test
-	//  @Order(2)
-	//  public void selectProductSortContainer() {
-	//    InventoryPage inventoryPage = new InventoryPage(driver);
-	//    Boolean optionExists = inventoryPage.selectProductSortContainer("lohi", "Price (low to high)");
-	//    assertTrue(optionExists, "Value not matching with the select dropdown list");
-	//  }
-
-	@Test
-	@Order(2)
-	public void selectProductSortContainer() {
-		WebElement selectElement = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
-
-		Select selectObject = new Select(selectElement);
-
-		selectObject.selectByValue("lohi");
-
-		WebElement selectElementA = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
-		Select selectObjectA = new Select(selectElementA);
-
-		List<WebElement> options = selectObjectA.getOptions();
-
-		boolean optionExists = false;
-
-		for (WebElement e: options) {
-			if (e.getText().equals("Price (low to high)")) {
-				optionExists = true;
-				break;
-			}
-		}
-
-		assertTrue(optionExists, "Value not matching with the select dropdown list");
-	}
-
-	@Test
-	@Order(3)
-	public void menuButton() {
-		WebElement burgerMenuButton = driver.findElement(By.id("react-burger-menu-btn"));
-
-		burgerMenuButton.click();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
 		assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl(), "unsuccessfully redirected");
 	}
 
 	@Test
+	@Order(2)
+	public void selectProductSortContainer() {
+		InventoryPage inventoryPage = new InventoryPage(driver);
+		Boolean optionExists = inventoryPage.selectProductSortContainer("lohi");
+		assertTrue(optionExists, "Value not matching with the select dropdown list");
+	}
+
+	//  @Test
+	//  @Order(2)
+	//  public void selectProductSortContainer() throws InterruptedException {
+	//    //  Thread.sleep(2000);
+	//    //  WebElement clickSelectProductSortContainerButtonA = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
+	//    //  clickSelectProductSortContainerButtonA.click();
+
+	//    Thread.sleep(2000);
+	//    WebElement clickSelectProductSortContainerButton = driver.findElement(By.xpath("//select[@data-test='product_sort_container']/option[@value='lohi' and . = 'Price (low to high)']"));
+	//    clickSelectProductSortContainerButton.click();
+
+	//    Thread.sleep(2000);
+	//    waitHelper.ImplicitWaitForElement(5);
+	//    WebElement selectElement = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
+
+	//    Select selectObject = new Select(selectElement);
+
+	//    Thread.sleep(2000);
+
+	//    boolean optionExists = false;
+
+	//    try {
+	//      selectObject.selectByValue("lohi");
+	//      optionExists = true;
+	//    } catch (org.openqa.selenium.NoSuchElementException e) {
+	//      e.printStackTrace();
+	//    }
+
+	//    assertTrue(optionExists, "Value not matching with the select dropdown list");
+	//  }
+
+	@Test
+	@Order(3)
+	public void menuButton() throws InterruptedException {
+		Thread.sleep(3000);
+		WebElement burgerMenuButton = driver.findElement(By.id("react-burger-menu-btn"));
+
+		burgerMenuButton.click();
+		Thread.sleep(3000);
+
+		assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl(), "unsuccessfully redirected");
+	}
+
+	@Test
 	@Order(4)
-	public void menuButtonAboutLink() {
-		//WebElement menuButtonAboutLinkButton = driver.findElement(By.id("about_sidebar_link"));
+	public void menuButtonAboutLink() throws InterruptedException {
 		WebElement menuButtonAboutLinkButton = driver.findElement(By.xpath("//a[contains(text(),'About')]"));
 
 		menuButtonAboutLinkButton.click();
+		Thread.sleep(3000);
 
 		assertEquals("https://saucelabs.com/", driver.getCurrentUrl(), "unsuccessfully redirected");
 	}
