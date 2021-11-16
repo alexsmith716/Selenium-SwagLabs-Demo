@@ -3,9 +3,6 @@ package com.SeleniumSwagLabsDemo.selenium;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-import java.time.Duration;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +10,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,7 +44,7 @@ class SwagLabsLogin {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login("performance_glitch_user", "secret_sauce");
 
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		waitHelper.ImplicitWaitForElement(5);
 
 		assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl(), "unsuccessfully redirected");
 	}
@@ -60,37 +56,6 @@ class SwagLabsLogin {
 		Boolean optionExists = inventoryPage.selectProductSortContainer("lohi");
 		assertTrue(optionExists, "Value not matching with the select dropdown list");
 	}
-
-	//  @Test
-	//  @Order(2)
-	//  public void selectProductSortContainer() throws InterruptedException {
-	//    //  Thread.sleep(2000);
-	//    //  WebElement clickSelectProductSortContainerButtonA = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
-	//    //  clickSelectProductSortContainerButtonA.click();
-
-	//    Thread.sleep(2000);
-	//    WebElement clickSelectProductSortContainerButton = driver.findElement(By.xpath("//select[@data-test='product_sort_container']/option[@value='lohi' and . = 'Price (low to high)']"));
-	//    clickSelectProductSortContainerButton.click();
-
-	//    Thread.sleep(2000);
-	//    waitHelper.ImplicitWaitForElement(5);
-	//    WebElement selectElement = driver.findElement(By.xpath("//select[@data-test='product_sort_container']"));
-
-	//    Select selectObject = new Select(selectElement);
-
-	//    Thread.sleep(2000);
-
-	//    boolean optionExists = false;
-
-	//    try {
-	//      selectObject.selectByValue("lohi");
-	//      optionExists = true;
-	//    } catch (org.openqa.selenium.NoSuchElementException e) {
-	//      e.printStackTrace();
-	//    }
-
-	//    assertTrue(optionExists, "Value not matching with the select dropdown list");
-	//  }
 
 	@Test
 	@Order(3)

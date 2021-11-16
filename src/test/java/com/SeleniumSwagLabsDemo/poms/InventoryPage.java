@@ -16,7 +16,7 @@ import com.SeleniumSwagLabsDemo.utilities.WaitHelper;
 
 public class InventoryPage {
 
-	private static WaitHelper waitHelper;
+	private WaitHelper waitHelper;
 
 	@FindBy(xpath = "//select[@data-test='product_sort_container']")
 	@CacheLookup
